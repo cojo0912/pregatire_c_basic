@@ -112,11 +112,47 @@ void delete_valoare(struct nod ** prim, int val)
         return;
     struct nod * iter = (*prim);
 
-    //if(iter->)
+    if((*prim)->x == val)
+    {
+        (*prim) = (*prim) -> next;
+        free(iter);  
+        iter = NULL;
+        return;
+    }
+
+    while(iter->next != NULL)
+    {
+        if(iter->next->x == val)
+        {
+            struct nod * care_trebuie_sters = iter->next;
+            iter->next = iter->next->next;
+            free(care_trebuie_sters);
+            care_trebuie_sters = NULL;
+            return;
+        }
+        iter = iter->next;
+    }
     
 }
 
-//void adaugare_dupa_un_nod(struct nod ** prim, int val, int val_dupa_care_vrei_sa_adaugi)
+void adaugare_dupa_un_nod(struct nod ** prim, int val, int val_dupa_care_vrei_sa_adaugi)
+{
+    struct nod * p = (struct nod *) malloc(sizeof(struct nod));
+    p->next = NULL;
+    p->x = val;
+
+    struct nod * iter = (*prim);
+    while(iter!=NULL)
+    {
+        if(iter->x == val_dupa_care_vrei_sa_adaugi)
+        {
+            p->next = iter->next;
+            iter->next = p;
+            return;
+        }
+        iter = iter->next;
+    }
+}
 
 int main()
 {
@@ -129,6 +165,8 @@ int main()
     adaugare_sfarsit(&list, 4);
     adaugare_sfarsit(&list, 5);
     adaugare_sfarsit(&list, 6);
+    adaugare_sfarsit(&list, 7);
+    adaugare_sfarsit(&list, 8);
 
     parcurgere_inainte(list);
     printf("\n");
@@ -138,6 +176,11 @@ int main()
 
     delete_intecput(&list);
     delete_final(&list);
+    delete_valoare(&list, 2);
+    delete_valoare(&list, 4);
+
+    adaugare_dupa_un_nod(&list,100,6);
+
     parcurgere_inainte(list);
     printf("\n");
 
