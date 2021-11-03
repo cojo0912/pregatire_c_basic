@@ -1,13 +1,25 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+#include<string.h>
 
 struct person{
     char * name;
     struct person * contacts;
     struct person * next;
 };
+
+void add_person(struct person ** persons, char*name)
+{
+    struct person * p = (struct person *)malloc(sizeof(struct person));
+    p->next = NULL;
+    p->contacts = NULL;
+    p->name = (char*)malloc(sizeof(char)*(strlen(name)+1));
+    strcpy(p->name, name);
+
+    p->next = (*persons);
+    (*persons) = p;
+}
 
 void print_contacts(struct person * contacts)
 {
@@ -26,19 +38,6 @@ void print_persons(struct person * persons)
         print_contacts(persons->contacts);
         persons = persons->next;
     }
-}
-
-
-void add_person(struct person ** persons, char*name)
-{
-    struct person * p = (struct person *)malloc(sizeof(struct person));
-    p->next = NULL;
-    p->contacts = NULL;
-    p->name = (char*)malloc(sizeof(char)*(strlen(name)+1));
-    strcpy(p->name, name);
-
-    p->next = (*persons);
-    (*persons) = p;
 }
 
 struct person * find_person(struct person * persons, char *name)
@@ -131,6 +130,10 @@ struct person * remove_person(struct person * persons, char*name)
             persons->contacts = persons->contacts->contacts;
             free_node(iter);
         }
+        struct person * iter2 = persons;
+        persons = persons -> next;
+        free_node(iter2);
+        return persons;
     }
 
     iter = persons;
@@ -140,6 +143,13 @@ struct person * remove_person(struct person * persons, char*name)
         {
             struct person * iter2 = iter->next;
             iter->next = iter->next->next;
+
+            while(iter2->contacts != NULL)
+            {
+                struct person * iter3 = iter2->contacts;
+                iter2->contacts = iter2->contacts->contacts;
+                free_node(iter3);
+            }
             free_node(iter2);
             return persons;
         }
@@ -148,21 +158,21 @@ struct person * remove_person(struct person * persons, char*name)
 
 int main()
 {
+
     char comanda;
     bool ask = true;
 
     struct person *list = NULL;
+    char argument[255];
+    char argument2[255];
 
-    while(1)
+    while(comanda!='q')
     {
         if(ask)
-            printf("Command? "); 
+            printf("Command? ");
         scanf("%c", &comanda);
 
         ask = true;
-        char argument[255];
-        char argument2[255];
-
         switch(comanda)
         {
             case 'R':
@@ -184,7 +194,8 @@ int main()
                 scanf("%s",argument);
                 printf("Person B? ");
                 scanf("%s",argument2);
-                add_contact(find_person(list,argument),argument2);
+                struct person *p = find_person(list,argument);
+                add_contact(p,argument2);
                 break;
 
             case 'p':
@@ -198,8 +209,8 @@ int main()
                 break;
 
             case 'q':
-                printf("Bye!\n");
-                return 0;
+                printf("bye");
+                break;
 
             case '\r':
             case '\n':
@@ -207,9 +218,12 @@ int main()
                 break;
 
             default:
-                printf("Unknown command '%c'.\n", comanda);
+                printf("Uknown command\n");
                 break;
+
         }
     }
+
+    fflush(stdin); getc(stdin);
     return 0;
 }
