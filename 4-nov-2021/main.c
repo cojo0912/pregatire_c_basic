@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 
+//https://www.cplusplus.com/reference/cstdio/fopen/
 void read_contents(char *filename, int contents[])
 {
     FILE * file;
@@ -42,7 +43,7 @@ void rev(int contents[])
     
     do{
         i++;
-        if(contents[i] == '\n' || contents[i] == EOF)
+        if(contents[i] == '\n')
         {
             j = i-1;
             while(j>=0 && contents[j]!='\n')
@@ -50,7 +51,6 @@ void rev(int contents[])
             printf("\n");
         }       
     }while(contents[i] != EOF);
-
 }
 
 void wc(int contents[])
