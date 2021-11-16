@@ -12,6 +12,16 @@ struct page {
     struct page *next;
 };
 
+void find_page2(struct page **web, char *url)
+{
+    while((*web) != NULL)
+    {
+        if(strcmp((*web) -> url, url) == 0)
+            return;
+        (*web) = (*web) -> next;
+    }
+}
+
 struct page *find_page(struct page *web, char *url)
 {
     while(web != NULL)
@@ -49,6 +59,7 @@ struct page *add_page (struct page *web, char *url)
         return new;
     }
 
+    // strcmp(a,b)  <==>   if(a>b)
     while(iter->next!=NULL)
     {
         if(strcmp(iter->next->url,new->url)>0)
@@ -98,7 +109,7 @@ void add_link(struct page *web, char *source_url, char *dest_url)
     struct page * dest = find_page(web,dest_url);
     if(dest == NULL)
     {
-        printf("Source URL %s is not on the web\n", dest_url);
+        printf("Dest URL %s is not on the web\n", dest_url);
         return;
     }
 
@@ -131,6 +142,9 @@ void add_link(struct page *web, char *source_url, char *dest_url)
 
 void remove_page (struct page **web, char *url)
 {
+    if((*web) == NULL)
+        return;
+
     struct page * p = find_page(*web,url);
     if(p==NULL)
     {
@@ -191,7 +205,7 @@ int search_page (struct page *page, char *keyword)
     }
     
     int i = 0;
-    int aux = EOF;
+    int aux = EOF;      
     do
     {
         aux = fgetc(file);
