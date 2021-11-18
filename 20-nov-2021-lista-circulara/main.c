@@ -35,6 +35,9 @@ void adaugare_inceput(struct nod ** prim, int val)
 
 void parcurgere_inainte(struct nod * prim)
 {
+    if(prim == NULL)
+        return;
+
     struct nod * iter = prim;
     do
     {
@@ -45,6 +48,9 @@ void parcurgere_inainte(struct nod * prim)
 
 void parcurgere_inapoi(struct nod * prim, struct nod * iter)
 {
+    if(prim == NULL)
+        return;
+
     if(iter->next != prim)
         parcurgere_inapoi(prim, iter->next);
     printf("%d ", iter->x); 
@@ -73,6 +79,9 @@ void delete_inceput(struct nod ** prim)
 
 struct nod * exista(struct nod * prim, int val)
 {
+    if(prim == NULL)
+        return NULL;
+
     struct nod * iter = prim;
     do
     {
@@ -109,6 +118,9 @@ void delete_valoare(struct nod ** prim, int val)
 
 void adaugare_dupa_un_nod(struct nod ** prim, int val, int val_dupa_care_vrei_sa_adaugi)
 {
+    if((*prim) == NULL)
+        return;
+
     struct nod * de_dupa = exista((*prim), val_dupa_care_vrei_sa_adaugi);
     if(de_dupa == NULL)
         return;

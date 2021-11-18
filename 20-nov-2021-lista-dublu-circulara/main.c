@@ -36,104 +36,120 @@ void parcurgere_inainte(struct nod * prim)
 {
     if(prim == NULL)
         return;
+
+    struct nod * iter = prim;
     do
     {
-        printf("%d ", prim->val);
-        prim = prim -> next;
-    }
-    printf("\n ");
+        printf("%d ", iter->val);
+        iter = iter -> next;
+    }while(iter != prim);
 }
 
 void parcurgere_inapoi(struct nod * prim)
 {
     if(prim == NULL)
         return;
-    while(prim -> next != NULL)
+        
+    struct nod * iter = prim;
+    do
     {
-        prim = prim -> next;
-    }
-    while(prim != NULL)
-    {
-        printf("%d ", prim->val);
-        prim = prim -> prev;
-    }
+        iter = iter -> prev;
+        printf("%d ", iter->val);
+    }while(iter != prim);
 }
 
-void parcurgere_inapoi_rec(struct nod * prim)
+void parcurgere_inapoi_rec(struct nod * prim, struct nod * iter)
 {
     if(prim == NULL)
         return;
 
-    parcurgere_inapoi_rec(prim->next);
-    printf("%d ", prim->val); 
+    if(iter->next != prim)
+        parcurgere_inapoi_rec(prim, iter->next);
+    printf("%d ", iter->val); 
 }
 
-void delete_intecput(struct nod ** prim)
+void delete_inceput(struct nod ** prim)
 {
     if(*prim == NULL)
         return;
     
-    struct nod * iter = (*prim);
+    struct nod * to_del = (*prim);
     (*prim) = (*prim) -> next;
-    if((*prim) != NULL)
-        (*prim) -> prev = NULL;
+    
+    (*prim) -> prev = to_del ->prev;
+    to_del ->prev ->next = (*prim);
 
-    free(iter);  
-    iter = NULL;  
+    if((*prim) == to_del)
+        (*prim) = NULL;
+
+    free(to_del);
+}
+
+struct nod * exista(struct nod * prim, int val)
+{
+    if(prim == NULL)
+        return NULL;
+
+    struct nod * iter = prim;
+    do
+    {
+        if(iter->val == val)
+            return iter;
+        iter = iter -> next;
+    }while(iter != prim);
+    return NULL;
 }
 
 void delete_valoare(struct nod ** prim, int val)
 {
     if(*prim == NULL)
         return;
-    struct nod * iter = (*prim);
+    
+    struct nod * to_del = exista((*prim), val);
+    if(to_del == NULL)
+        return;
 
-    while(iter != NULL)
-    {
-        if(iter->val == val)
-        {
-            if(iter->prev != NULL)
-                iter -> prev -> next = iter ->next;
+    if(to_del == (*prim))
+        (*prim) = (*prim) -> next;
+    
+    to_del -> next -> prev = to_del ->prev;
+    to_del ->prev ->next = to_del -> next;
 
-            if(iter->next!=NULL)
-                iter->next->prev = iter->prev;
+    if((*prim) == to_del)
+        (*prim) = NULL;
 
-            if(iter == (*prim))
-                (*prim) = iter->next;
-
-            free(iter);
-            return;
-        }
-        iter = iter->next;
-    }
+    free(to_del);
 }
 
 void adaugare_dupa_un_nod(struct nod ** prim, int val, int val_dupa_care_vrei_sa_adaugi)
 {
+    if((*prim) == NULL)
+        return;
+
+    struct nod * de_dupa = exista((*prim), val_dupa_care_vrei_sa_adaugi);
+    if(de_dupa == NULL)
+        return;
+
     struct nod * p = (struct nod *) malloc(sizeof(struct nod));
     p->next = NULL;
-    p->prev = NULL;
     p->val = val;
 
-    struct nod * iter = (*prim);
-    while(iter!=NULL)
-    {
-        if(iter->val == val_dupa_care_vrei_sa_adaugi)
-        {
-            p->next = iter->next;
-            p->prev = iter;
-            iter->next = p;
-            if(p->next != NULL)
-                p->next->prev = p;
-            return;
-        }
-        iter = iter->next;
-    }    
+    p ->prev = de_dupa;
+    p -> next = de_dupa -> next;
+    de_dupa ->next ->prev = p;
+    de_dupa ->next = p;   
 }
 
 int main()
 {
-    struct nod * list = NULL;
+        struct nod * list = NULL;
+
+    adaugare_inceput(&list, 11);
+    delete_inceput(&list);
+    adaugare_inceput(&list, 10);
+    delete_valoare(&list, 10);
+    
+    adaugare_inceput(&list, 9);
     adaugare_inceput(&list, 8);
     adaugare_inceput(&list, 7);
     adaugare_inceput(&list, 6);
@@ -142,16 +158,35 @@ int main()
     adaugare_inceput(&list, 3);
     adaugare_inceput(&list, 2);
     adaugare_inceput(&list, 1);
-
-
-    parcurgere_inainte(list);
-    printf("\n");
-    parcurgere_inapoi(list);
-    printf("\n");
-    parcurgere_inapoi_rec(list);
-    printf("\n");
     
+    parcurgere_inainte(list); printf("\n");
+    parcurgere_inapoi(list); printf("\n");
+    parcurgere_inapoi_rec(list, list); printf("\n");
 
+    delete_inceput(&list);
+    parcurgere_inainte(list); printf("\n");
+
+    delete_valoare(&list, 2);
+    parcurgere_inainte(list); printf("\n");
+
+    adaugare_dupa_un_nod(&list, 100, 5);
+    parcurgere_inainte(list); printf("\n");
+
+    adaugare_dupa_un_nod(&list, 101, 9);
+    parcurgere_inainte(list); printf("\n");
+
+    delete_valoare(&list, 101);
+    parcurgere_inainte(list); printf("\n");
+
+    delete_valoare(&list, 3);
+    parcurgere_inainte(list); printf("\n");
+
+    adaugare_inceput(&list, 3);
+    parcurgere_inainte(list); printf("\n");
+
+    delete_valoare(&list, 100);
+    parcurgere_inainte(list); printf("\n");
+    parcurgere_inapoi(list); printf("\n");
 
 
     int x; scanf("%d", &x);
