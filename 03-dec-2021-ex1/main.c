@@ -143,7 +143,7 @@ void printStations(struct station *stations)
     }
 }
 
-int findShortestPath(struct station *stations, struct station*a, struct station *b)
+int findShortestPath(struct station *stations, struct station*a, struct station *b) //a - pozition actuala b - pozitia dorita
 {
     if(a ->visited == 1)
         return 9999;
@@ -158,6 +158,7 @@ int findShortestPath(struct station *stations, struct station*a, struct station 
     {
         struct station * aux = findStation(stations, iter->name);
         int aux2 = findShortestPath(stations, aux, b);
+        /////////////
         aux ->visited = 0;
         if(aux2<min)
             min = aux2;
