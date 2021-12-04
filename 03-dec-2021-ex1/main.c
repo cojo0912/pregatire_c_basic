@@ -43,10 +43,15 @@ void addStation(struct station **stations, char *station_name)
 
 void addDestintaion(struct station *station, char *station_name)
 {
-    if(findStation(station, station_name) != NULL)
+    struct station * iter = station ->destinations;
+    while(iter != NULL)
     {
-        printf("%s already exists\n", station_name);
-        return;
+        if(strcmp(iter->name,station_name) == 0)
+        {
+            printf("%s already exists\n", station_name);
+            return;
+        }
+        iter = iter ->destinations;
     }
 
     struct station * new = (struct station *) malloc (sizeof(struct station));
@@ -132,7 +137,7 @@ void printStations(struct station *stations)
         while(iter != NULL)
         {
             printf("- %s\n", iter->name);
-            iter=iter->next;
+            iter=iter->destinations;
         }
         stations = stations -> next;
     }
@@ -147,20 +152,19 @@ int findShortestPath(struct station *stations, struct station*a, struct station 
 
     a -> visited = 1;
     int min = 9999;
-
     
     struct station * iter = a ->destinations;
     while(iter != NULL)
     {
         struct station * aux = findStation(stations, iter->name);
-        int aux = findShortestPath(stations, aux, b);
+        int aux2 = findShortestPath(stations, aux, b);
         aux ->visited = 0;
-        if(aux<min)
-            min = aux;
+        if(aux2<min)
+            min = aux2;
         iter = iter->destinations;
     }
     
-    return min;
+    return 1+min;
 }
 
 int main()
@@ -184,6 +188,29 @@ int main()
 
         switch(comanda)
         {
+            case 'f':
+                printf("Station 1 name? ");scanf("%s", argument1);
+                struct station * s1 = findStation(list, argument1);
+
+                printf("Station 2 name? ");scanf("%s", argument2);
+                struct station * s2 = findStation(list, argument2);
+
+                if(s1 == NULL || s2 == NULL)
+                {
+                    printf("One of the stations is missing");
+                    break;
+                }else
+                {
+                    struct station * iter = list;
+                    while(iter!=NULL)
+                    {
+                        iter ->visited = 0;
+                        iter = iter ->next;
+                    }
+                    printf("Shortest path: %d\n", findShortestPath(list,s1,s2));
+                    break;
+                }
+
             case 's':
                 printf("Station name? ");scanf("%s", argument1);
                 addStation(&list, argument1);
