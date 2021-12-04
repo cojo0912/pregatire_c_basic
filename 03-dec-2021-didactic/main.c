@@ -6,6 +6,31 @@
 
 #define LOCATIE_FISIER "/Users/andrei/Documents/PersonalProjects/pregatire_c_basic/03-dec-2021-didactic/fisier.txt"
 
+/*
+    cam tot ce am facut aici este posibil sa faci si cu scanf fscanf printf fprintf
+*/
+
+void compare_ex1()
+{
+    printf("\n\n\n\n");
+    FILE * pFile;
+    int c;
+    int n = 0;
+    pFile=fopen (LOCATIE_FISIER,"r");
+    if (pFile==NULL) 
+    {    
+        printf("Error opening file\n");
+    }
+    else
+    {
+        while(fscanf(pFile, "%c", &c) != EOF)
+        {
+            printf("<%c>",c);
+        } 
+        fclose (pFile);
+    }
+}
+
 void exemplu1()
 {
     FILE * pFile;
@@ -24,6 +49,28 @@ void exemplu1()
             printf("<%c>",c);
         } 
         while (c != EOF);
+        fclose (pFile);
+    }
+    compare_ex1();
+}
+
+void compare_ex2()
+{
+    printf("\n\n\n\n");
+    FILE * pFile;
+    char str[50];
+    int n = 0;
+    pFile=fopen (LOCATIE_FISIER,"r");
+    if (pFile==NULL) 
+    {    
+        printf("Error opening file\n");
+    }
+    else
+    {
+        while(fscanf(pFile, "%s", &str) != EOF)
+        {
+            printf("<%s>",str);
+        } 
         fclose (pFile);
     }
 }
@@ -46,11 +93,15 @@ void exemplu2()
         }
         fclose (pFile);
     }
+    compare_ex2();
 }
 
 void exemplu3()
 {
-    char str[255];
+    char str[50], str2[10];
+
+    strcpy(str2, "123456789");
+
     while(gets(str)!=NULL)
     {
         if(strstr(str,"exit")!=NULL)
@@ -58,7 +109,7 @@ void exemplu3()
             return;
         }else
         {
-            printf("<%s>",str);
+            printf("<%s> <%s>\n",str, str2);
         }
     }
 }
@@ -89,7 +140,7 @@ void exemplu5()
     FILE * pFile;
     char c;
 
-    pFile=fopen(LOCATIE_FISIER,"a+");
+    pFile=fopen(LOCATIE_FISIER,"a");
 
     if (pFile==NULL) 
     {    
@@ -110,7 +161,7 @@ void exemplu6()
     FILE * pFile;
     char str[]="ana are mere\nmihai are pere\n";
 
-    pFile=fopen(LOCATIE_FISIER,"a+");
+    pFile=fopen(LOCATIE_FISIER,"a");
 
     if (pFile==NULL) 
     {    
@@ -118,7 +169,8 @@ void exemplu6()
     }
     else
     {
-
+        fprintf(pFile, "%s", str);
+        //printf
         fputs(str , pFile);
         puts(str);
         fclose (pFile);
@@ -137,6 +189,15 @@ void exemplu7()
     printf("S1: %s\nS2: %s\n\n", str1, str2); 
     printf("Press to continue....\n"); getc(stdin);
 
+    /*
+        int x;
+        scanf("%d", &x);
+
+        //acelasi lucru inseamna si 
+        fscanf(stdin, %d", &x);
+
+    */
+
     printf("Lugime string %d\n", strlen(str1));
     printf("Press to continue....\n"); getc(stdin);
 
@@ -144,7 +205,7 @@ void exemplu7()
     printf("%s\n",str1);
     printf("Press to continue....\n"); getc(stdin);
 
-    printf("%d %d %d", strcmp(str1, str2), strcmp(str2, str1), strcmp(str1,str1));
+    printf("%d %d %d\n", strcmp(str1, str2), strcmp(str2, str1), strcmp(str1,str1));
     printf("Press to continue....\n"); getc(stdin);
 
     char * pch;
@@ -204,7 +265,7 @@ int main()
     //exemplu3();
 
     //scriere
-    //exemplu4(); -- sterge fisierul
+    //exemplu4(); //-- sterge fisierul
     //exemplu5();
     //exemplu6();
     exemplu7();  
