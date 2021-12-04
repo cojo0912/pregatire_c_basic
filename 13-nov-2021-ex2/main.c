@@ -75,11 +75,14 @@ void changeDirectory(struct inode **fs, char *dir)
         return;
 
     if(strcmp(dir,"..")==0)
+    {
         if((*fs)->parent!=NULL)
         {
             (*fs) = (*fs)->parent;
             return;
-        }
+        }else
+            return;
+    }
 
     for(int i=0; i<MAX_CHILDREN; i++)
         if((*fs)->children[i]!=NULL)

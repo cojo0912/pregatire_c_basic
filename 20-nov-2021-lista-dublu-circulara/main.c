@@ -132,6 +132,7 @@ void adaugare_dupa_un_nod(struct nod ** prim, int val, int val_dupa_care_vrei_sa
 
     struct nod * p = (struct nod *) malloc(sizeof(struct nod));
     p->next = NULL;
+    p->prev = NULL;
     p->val = val;
 
     p ->prev = de_dupa;

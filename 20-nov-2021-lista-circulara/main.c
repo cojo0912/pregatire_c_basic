@@ -135,6 +135,8 @@ void adaugare_dupa_un_nod(struct nod ** prim, int val, int val_dupa_care_vrei_sa
 
 int main()
 {
+    
+
     struct nod * list = NULL;
 
     adaugare_inceput(&list, 11);
