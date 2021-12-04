@@ -88,7 +88,7 @@ void print(struct person *registry)
 
     while (registry != NULL)
     {
-        printf("%s is %f cm tall.\n", registry->name, registry->height);
+        printf("%s is %.2f cm tall.\n", registry->name, registry->height);
         registry = registry->next;
     }
 }
@@ -146,7 +146,7 @@ void print_registry_reverse(struct person *registry){
 
     
 }
-
+ 
 int main()
 {
 
