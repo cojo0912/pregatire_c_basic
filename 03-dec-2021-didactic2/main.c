@@ -2,7 +2,7 @@
 #include <stdbool.h>
  
 //mai multe despre backtracking https://www.baeldung.com/cs/backtracking-algorithms
-
+//mai multe exemple https://www.geeksforgeeks.org/backtracking-algorithms/
 
 #define N 5
  
@@ -40,8 +40,9 @@ bool solveMazeUtil(
  
     if (isSafe(maze, x, y) == true) 
     {   
-          if (sol[x][y] == 1)
+        if (sol[x][y] == 1)
               return false;
+        
         sol[x][y] = 1;
  
         if (solveMazeUtil(
