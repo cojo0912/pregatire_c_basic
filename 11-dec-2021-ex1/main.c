@@ -25,55 +25,64 @@ node_t *find_word(node_t *concordance, char word[])
 
 node_t *addWord(node_t *concordance, char word[])
 {
-    if(find_page(concordance,word)!=NULL)
+    if(find_word(concordance,word)!=NULL)
     {
         printf("URL %s is already exists\n", word);
         return concordance;
     }
 
-    struct page * new = (struct page *)malloc(sizeof(node_t));
-    new ->visited = -1;
-    new ->next = NULL;
-    for(int i = 0; i<MAXLINKS; i++)
-        new -> links[i] = NULL;
-    new -> url = (char*)malloc(sizeof(char) * (strlen(url)+1));
-    strcpy(new -> url, url);
+    node_t * new = (struct page *)malloc(sizeof(node_t));
+    new ->nextWord = NULL;
+    for(int i = 0; i<MAXINDEX; i++)
+        new -> indices[i] = -1;
+    new -> word = (char*)malloc(sizeof(char) * (strlen(word)+1));
+    strcpy(new -> word, word);
 
-    if(web == NULL)
+    if(concordance == NULL)
         return new;
 
-    struct page * iter = web;
-    if(strcmp(iter->url,new->url)>0)
+    node_t * iter = concordance;
+    if(strcmp(iter->word,new->word)>0)
     {
-        new->next = web;
+        new->nextWord = concordance;
         return new;
     }
 
     // strcmp(a,b)  <==>   if(a>b)
-    while(iter->next!=NULL)
+    while(iter->nextWord!=NULL)
     {
-        if(strcmp(iter->next->url,new->url)>0)
+        if(strcmp(iter->nextWord->word,new->word)>0)
         {
-            new->next = iter->next;
-            iter ->next = new;
-            return web;
+            new->nextWord = iter->nextWord;
+            iter ->nextWord = new;
+            return concordance;
         }
-        iter = iter -> next;
+        iter = iter -> nextWord;
     }
 
-    iter ->next = new;
-    return web;
+    iter ->nextWord = new;
+    return concordance;
+}
+
+void printConcordance(node_t *concordance)
+{
+    int nr_of_printed_words = 0;
+    while(concordance != NULL)
+    {
+        printf("%20s:", concordance->word);
+        concordance = concordance ->nextWord;
+        printf("\n");
+    }
+    if(nr_of_printed_words==0)
+        printf("pThe concordance is empty.\n");
 }
 
 int main()
 {
 
     char command;
-    struct person *registry = NULL;
-    char name[1000];
-    float height;
     bool ask = true;
-
+    char argument[255];
     node_t * concordance = NULL;
 
     while (1)
@@ -87,8 +96,15 @@ int main()
 
         switch (command)
         {
+        case 'w':
+            printf("Word? ");
+            scanf("%s", argument);
+            concordance = addWord(concordance, argument);
+            break;
 
-
+        case 'p':
+            printConcordance(concordance);
+            break;
 
         case ' ':
         case '\r':
