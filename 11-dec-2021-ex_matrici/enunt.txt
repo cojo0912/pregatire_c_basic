@@ -4,4 +4,7 @@ Calculatori produsul unor matrici patratice.
 
 Calculati detelrminantul unei matrici de 3 pe 3.
 
-Sa se citeasca o metrice de 3 pe 3 de la tastatura si sa se calculeze inversa sa
+Sa se citeasca o metrice de 3 pe 3 de la tastatura si sa se calculeze inversa sa.
+
+
+https://liceunet.ro/ghid-matrice/inversa
