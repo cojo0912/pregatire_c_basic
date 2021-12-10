@@ -1,0 +1,55 @@
+1.Utilizând metoda backtracking se generează în ordine lexicografică cuvintele de câte patru
+litere din mulţimea A={a,b,c,d,e}, cuvinte care nu conţin două vocale alăturate. Primele
+opt cuvinte generate sunt, în ordine: abab, abac, abad, abba, abbb, abbc, abbd, abbe.
+Câte dintre cuvintele generate încep cu litera b şi se termină cu litera e?
+
+babe,bace,bade – 3                                       3 X 5 = 15
+bbbe,bbde,bbce – 3
+bebe,bcce,bcde – 3                                       Raspuns : 15
+bdbe,bdce,bdde - 3
+bebe,bece,bede – 3
+
+5.Folosind modelul combinărilor se generează numerele naturale cu câte trei cifre distincte din
+mulţimea {1,2,3,7}, numere cu cifrele în ordine strict crescătoare, obţinându-se, în ordine:
+123, 127, 137, 237. Dacă se utilizează exact aceeaşi metodă pentru a genera numerele
+naturale cu patru cifre distincte din mulţimea {1,2,3,4,5,6,7,8}, câte dintre numerele
+generate au prima cifră 2 şi ultima cifră 7?
+
+2345, 2346, 2347, 2348, 2456, 2457, 2458, 2567, 2568, 2578 Raspuns: 3 numere
+                      1                             2                 3
+
+6.Utilizând metoda backtracking sunt generate numerele de 3 cifre, având toate cifrele
+distincte şi cu proprietatea că cifrele aflate pe poziţii consecutive sunt de paritate diferită.
+Ştiind că primele şase soluţii generate sunt, în această ordine, 103, 105, 107, 109,
+123, 125, care este a zecea soluţie generată?
+
+103 , 105 , 107 , 109 , 123 , 125 ,127 ,129 , 143 , 145 Raspuns: 145
+  1      2       3       4        5      6       7     8       9      10
+
+
+7.Un algoritm de tip backtracking genereaza in ordine lexicografica toate sirurile de 5 cifre 0 si 1 cu proprietatea ca nu exista mai mult de doua cifre zero pe pozitii consecutive. Primele 7 solutii generate sunt : 00100, 00101, 00110, 00111, 01001, 01010, 01011. Care este a 8-a solutie generata de acest algoritm ?
+
+Raspuns: 01110 a 8-a solutie
+
+
+8.Folosind tehnica bactracking un elev a scris un program care generează toate numerele de
+câte n cifre (0<n≤9), cifrele fiind în ordine strict crescătoare. Dacă n este egal cu 5, scrieți
+în ordine crescătoare toate numerele având cifra unităților 6, care vor fi generate de
+program.
+
+Raspuns: 12346, 12356, 12456, 13456, 23456
+
+
+9.Câte numere cu exact două cifre pot fi construite folosind doar cifre pare distincte?
+
+20, 40, 60, 80, 24, 26, 28, 42, 46, 48, 62, 64, 68, 82, 84, 86
+Raspuns: 16 numere
+
+
+
+10.Un algoritm generează în ordine crescătoare toate numerele de n cifre, folosind doar cifrele
+3, 5 şi 7. Dacă pentru n=5, primele 5 soluţii generate sunt 33333, 33335, 33337,
+33353, 33355, precizaţi care sunt ultimele 3 soluţii generate, în ordinea generării.
+
+Raspuns: 77773, 77775, 77777
+
