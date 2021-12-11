@@ -12,6 +12,8 @@ typedef struct _node_t {
   struct _node_t *nextWord;
 } node_t;
 
+//char * word <==> char word[]
+
 node_t *find_word(node_t *concordance, char word[])
 {
     while(concordance != NULL)
@@ -25,7 +27,7 @@ node_t *find_word(node_t *concordance, char word[])
 
 int calculate_max_index(node_t *concordance)
 {
-    int max_index = 0;
+    int max_index = -1;
     while(concordance != NULL)
     {
         for(int i=0; i<MAXINDEX; i++)
@@ -40,11 +42,11 @@ node_t *addWord(node_t *concordance, char word[])
 {
     if(find_word(concordance,word)!=NULL)
     {
-        printf("URL %s is already exists\n", word);
+        //printf("word %s is already exists\n", word);
         return concordance;
     }
 
-    node_t * new = (struct page *)malloc(sizeof(node_t));
+    node_t * new = (node_t *)malloc(sizeof(node_t));
     new ->nextWord = NULL;
     for(int i = 0; i<MAXINDEX; i++)
         new -> indices[i] = -1;
@@ -82,7 +84,7 @@ void printConcordance(node_t *concordance)
     int nr_of_printed_words = 0;
     while(concordance != NULL)
     {
-        printf("%15s:", concordance->word);
+        printf("%10s:", concordance->word);
         for(int i=0; i<MAXINDEX; i++)
             if(concordance->indices[i]!=-1)
                 printf(" %d", concordance->indices[i]);
@@ -183,8 +185,7 @@ void readFile(node_t **concordance, char *filename, int *index)
         addIndex(*concordance,aux,*index);
     }
     fclose(fp);
-    
-    return(0);
+    return;
 }
 
 int main()
