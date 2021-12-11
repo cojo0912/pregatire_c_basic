@@ -6,11 +6,11 @@
 #include <ctype.h>
 
 void printmat(int **a, int nl, int nc) {
-  for (int i = 0; i < nl; i++) {
+  for (int i = 0; i < nl; i++) 
+  {
     for (int j = 0; j < nc; j++) {
       printf("%2d", a[i][j]);
-    }
- 
+    } 
     printf("\n");
   }
 }
@@ -35,6 +35,9 @@ int main()
   for (i = 0; i < nl; i++) {
     a[i] = calloc(nc, sizeof(int)); // Alocare pentru o linie si initializare la zero
   }
+
+  //malloc(dimensiune)
+  //calloc(cate obiecte , dimensiunea unui obiect)
  
   // Completare diagonala matrice unitate
   for (i = 0; i < nl; i++) 

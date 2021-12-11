@@ -7,6 +7,8 @@
 
 int main()
 {
+    printf("\" \' \\ %%\n");
+
     printf("Press to continue...\n\n");getc(stdin);
     printf("\\a \a\n");
 
@@ -33,8 +35,6 @@ int main()
     printf("Press to continue...\n\n");getc(stdin);
     printf("vertical\vtab\n");
 */
-
-
 
     getc(stdin);
 }
