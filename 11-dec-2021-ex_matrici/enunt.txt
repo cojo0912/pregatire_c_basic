@@ -1,10 +1,12 @@
+Matrici patratice de n pe m cu citit de la tastatura
 Calculati suma a doua matrici de aceleasi dimensiuni;
 
+Matrice patratica de dim n cita de la tastatura
 Calculatori produsul unor matrici patratice.
 
 Calculati detelrminantul unei matrici de 3 pe 3.
+Sa se citeasca o metrice de 3 pe 3 de la tastatura si sa se calculeze inversa sa in cazul in care se poate.
 
-Sa se citeasca o metrice de 3 pe 3 de la tastatura si sa se calculeze inversa sa.
-
+Raspunsul la printare de matrici trebuie sa fie tabulat la %5.2f
 
 https://liceunet.ro/ghid-matrice/inversa
